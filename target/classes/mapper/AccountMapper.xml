@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.humh.ysdt.dao.AccountDao">
+	<resultMap id="BaseResultMap" type="org.humh.ysdt.domain.Account">
+		<result column="id" property="id" />
+		<result column="openid" property="openid" />
+		<result column="createTime" property="create_time" />
+		<result column="description" property="description" />
+	</resultMap>
+
+	<parameterMap id="Account" type="org.humh.ysdt.domain.Account"/>
+
+	<sql id="Base_Column_List">
+		id, openid, create_time, description
+	</sql>
+
+	<select id="findByOpenid" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from account
+		where openid = #{openid}
+	</select>
+
+	<insert id="saveAccount" parameterMap="Account" useGeneratedKeys="true" keyProperty="id">
+		insert into
+		account(id,openid,create_time,description)
+		values
+		(#{id},#{openid},Now(),#{description})
+	</insert>
+
+</mapper>
